@@ -906,27 +906,20 @@ public class MainActivity extends Activity implements OnItemClickListener, OnCli
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
 		 if(keyCode == KeyEvent.KEYCODE_BACK){
 			 if(!flag){
-				 Toast.makeText(context, context.getString(R.string.txt_main_activity6) , Toast.LENGTH_SHORT).show();
+				 Toast.makeText(context, context.getString(R.string.txt_main_activity6) , Toast.LENGTH_LONG).show();
 				 flag = true;
 				 handler.sendEmptyMessageDelayed(0, 2000);
-			 return false;
+				 return false;
 			 }else{
-				 try{
-					 if(ContinueMediaPlayer.mediaPlayer.isPlaying()){
-						 ContinueMediaPlayer.mediaPlayer.stop();
+				 handler.postDelayed(new Runnable() {
+					 @Override
+					 public void run() {
+						 PreferenceUtil.setBooleanSharedData(context, PreferenceUtil.PREF_AD_VIEW, true);
+						 finish();
 					 }
-					 MainActivity.setNotification_Cancel();
-					 handler.postDelayed(new Runnable() {
-						 @Override
-						 public void run() {
-							 addInterstitialView_popup();
-						 }
-					 },0);
-						 
-				 }catch(Exception e){
-				 }
+				 },0);
 			 }
-            return false;	 
+			 return false;	 
 		 }
 		return super.onKeyDown(keyCode, event);
 	}
